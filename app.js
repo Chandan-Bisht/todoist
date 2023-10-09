@@ -4,6 +4,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const _ = require("lodash");
+const PORT = process.env.PORT || 3000;
+require("dotenv").config();
 
 const app = express();
 
@@ -12,10 +14,7 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-mongoose.connect(
-  "mongodb+srv://bishtchandan023:Ogeu6I0S7zH3RyR2@cluster1.vgaenjn.mongodb.net/itemsDB",
-  { useNewUrlParser: true }
-);
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true });
 
 const itemsSchema = {
   name: String,
@@ -140,6 +139,6 @@ app.get("/about", function (req, res) {
   res.render("about");
 });
 
-app.listen(3000, function () {
-  console.log("Server started on port 3000");
+app.listen(PORT, function () {
+  console.log(`Server started on port ${PORT}`);
 });
